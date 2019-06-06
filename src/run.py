@@ -1,3 +1,5 @@
+# python 3.7.1
+
 from os import sys
 from translatorbot import TranslatorBot
 import logger

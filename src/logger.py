@@ -29,6 +29,17 @@ class Logger():
             self.lock.release()
         except Exception as exc:
             raise exc
+    
+    def logMsg(self, msg):
+        if self.verbosity == Verbosity.none:
+            return
+        if self.verbosity == Verbosity.high:
+            self.log('Recieved msg from: ' + str(msg.author))
+        if self.verbosity >= Verbosity.medium:
+            self.log('Content: ' + msg.content)
+
+            
+
 
 if __name__ == '__main__':
     from os import sys
