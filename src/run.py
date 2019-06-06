@@ -4,6 +4,6 @@ from os import sys, environ
 from translatorbot import TranslatorBot
 import logger
 
-token = environ.get('token')
-bot = TranslatorBot(logger.Logger(sys.stdout, logger.Verbosity.none))
+token = open('token\\token.dtoken').readline()
+bot = TranslatorBot(logger.Logger(sys.stdout, logger.Verbosity.high))
 bot.run(token)

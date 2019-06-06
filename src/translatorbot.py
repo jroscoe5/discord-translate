@@ -14,29 +14,49 @@ class TranslatorBot(discord.Client):
     async def on_ready(self):
         self.logger.log('Connection established')
         self.logger.log('Connected as: ' + str(self.user))
-        await self.change_presence(activity=discord.Game('documentation link coming in the future'))
+        await self.change_presence(activity=discord.Game('Im being worked on atm'))
 
     async def on_message(self, msg):
+        # Doesn't respond to itself if something like "t!en t!en loop" is said
         if msg.author == self.user:
             return
+        try:
+            self.logger.log_msg(msg)
+            res = self.parse_msg(msg)
 
-        self.logger.logMsg(msg)
+            if not res['success']:
+                return
+
+            trans = self.translate(content=res['text'], lang=res['lang'])
+            self.logger.log('Translated: ' + trans)
+            await msg.channel.send(trans)
+        except Exception as exc:
+            self.logger.log(str(exc))
+
+    def translate(self, content, lang):
+        return self.translator.translate(text=content,dest=lang).text
+
+    def parse_msg(self, msg):
+        result = {'success':False, 'lang':'', 'text':''}
         content = msg.content
 
-        if len(content) < 6: 
-            return
+        # Check if msg starts with prefix
+        if len(content) < 2 or content[:2] != self.prefix:
+            return result
 
-        tag = content.split(' ')[0]
-        if tag[:2] != self.prefix:
-            return
-        try:
-            text = content[len(tag):]
-            result = self.translate(text, dest=tag[2:])
-            self.logger.log('Translated: ' + result)
-            await msg.channel.send(result)
-        except Exception as exc:
-            self.logger.log(exc)
+        splitContent = content.split(' ')
 
-    def translate(self, content, dest):
-        return self.translator.translate(text=content,dest=dest).text
+        # Check if message contains more than prefix
+        if len(splitContent) < 2:
+            return result
+
+        # Destination language should directly follow tag (default is English)
+        result['lang'] = 'en'
+        if len(splitContent[0]) > 2:
+            result['lang'] = splitContent[0][2:]
+
+        # Remainder of message should be translated
+        result['text'] = content[len(splitContent[0]):]
+        result['success'] = True
         
+        return result

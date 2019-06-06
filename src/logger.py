@@ -30,20 +30,16 @@ class Logger():
         except Exception as exc:
             raise exc
     
-    def logMsg(self, msg):
+    def log_msg(self, msg):
         if self.verbosity == Verbosity.none:
             return
         if self.verbosity == Verbosity.high:
-            self.log('Recieved msg from: ' + str(msg.author))
-        if self.verbosity >= Verbosity.medium:
-            self.log('Content: ' + msg.content)
-
-            
-
-
-if __name__ == '__main__':
-    from os import sys
-    file = open('test.txt','w')
-    logger = Logger(sys.stdout, 2)
-    print(logger.verbosity)
-    logger.log('hello, world')
+            self.log(str(msg.author) + ' in channel ' + str(msg.channel) + ':  ' + msg.content)
+        elif self.verbosity == Verbosity.medium:
+            self.log(str(msg.author) + ': ' + msg.content)
+    
+    def log_trans(self, trans):
+        pass
+    
+    def log_exc(self, exc):
+        pass
