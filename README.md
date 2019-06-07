@@ -8,6 +8,10 @@ Want to add this bot to your server? Click this [link](https://discordapp.com/ap
 
 If it is down it is probably Google blocked the free API calls or Heroku free tier hosting limits
 
+#### Usage
+t![target lang] [text to translate]
+language codes can be found at the bottom [here](https://py-googletrans.readthedocs.io/en/latest/)
+
 
 #### Licensed under
 *The MIT License
