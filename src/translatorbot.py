@@ -28,16 +28,18 @@ class TranslatorBot(discord.Client):
                 return
 
             trans = self.translate(content=res['text'], lang=res['lang'])
-            self.logger.log('Translated: ' + trans)
+            res['trans'] = trans
+            self.logger.log_trans(res)
+
             await msg.channel.send(trans)
         except Exception as exc:
-            self.logger.log(str(exc))
+            self.logger.log_exc(exc)
 
     def translate(self, content, lang):
         return self.translator.translate(text=content,dest=lang).text
 
     def parse_msg(self, msg):
-        result = {'success':False, 'lang':'', 'text':''}
+        result = {'success':False, 'lang':'', 'text':'', 'trans':''}
         content = msg.content
 
         # Check if msg starts with prefix

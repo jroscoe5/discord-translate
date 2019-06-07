@@ -35,11 +35,16 @@ class Logger():
             return
         if self.verbosity == Verbosity.high:
             self.log(str(msg.author) + ' in channel ' + str(msg.channel) + ':  ' + msg.content)
-        elif self.verbosity == Verbosity.medium:
-            self.log(str(msg.author) + ': ' + msg.content)
     
     def log_trans(self, trans):
-        pass
+        if self.verbosity == Verbosity.none:
+            return
+        if self.verbosity >= Verbosity.medium:
+            self.log('Dest Lang: ' + trans['lang'] + ' | Original: ' +trans['text'] + ' | Trans: ' + trans['trans'])
+        else:
+            self.log(trans['text'] + ' -> ' + trans['trans'])
     
     def log_exc(self, exc):
-        pass
+        if self.verbosity == Verbosity.none:
+            return
+        self.log(str(exc))
