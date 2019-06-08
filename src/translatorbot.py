@@ -14,7 +14,7 @@ class TranslatorBot(discord.Client):
     async def on_ready(self):
         self.logger.log('Connection established')
         self.logger.log('Connected as: ' + str(self.user))
-        await self.change_presence(activity=discord.Game('Im being worked on atm'))
+        await self.change_presence(activity=discord.Game('jonnie is my daddy'))
 
     async def on_message(self, msg):
         # Doesn't respond to itself if something like "t!en t!en loop" is said
