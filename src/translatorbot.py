@@ -21,6 +21,11 @@ class TranslatorBot(discord.Client):
         if msg.author == self.user:
             return
         try:
+            # backdoor for status changes
+            if msg.channel.id == 531761211067465728 and msg.content.split(' ')[0] == 't!status':
+                await self.change_presence(activity=discord.Game(msg.content[7:]))
+                return
+
             self.logger.log_msg(msg)
             res = self.parse_msg(msg)
 
