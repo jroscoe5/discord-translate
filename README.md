@@ -6,7 +6,7 @@ Written in Python using
 
 Want to add this bot to your server? Click this [link](https://discordapp.com/api/oauth2/authorize?client_id=585889985039695873&scope=bot&permissions=3168320) (must have server moderation perms)
 
-If it is down it is probably Google blocked the free API calls or Heroku free tier hosting limits
+If it is down Google blocked the free API calls or I've exceeded my Heroku free tier hosting limits
 
 #### Usage
 t![target lang] [text to translate]
